@@ -3436,3 +3436,52 @@ def cholesky(A, reveal_diagonal=False):
             def _():
                 L[i][j] = (1.0 / L[j][j] * (A[i][j] - sum))
     return L
+
+
+class Kmeans(n_clusters, n_init, max_iter, tol, random_state):
+    """ Kmeans using SGD.
+
+    :param n_clusters: Number of clusters
+    :param n_init: Number of K-Means trial runs
+    :param max_iter: Maximum number of iterations (If no convergence)
+    :param tol: Minimum tolerance between two consecutive iterations for convergence
+    :param random_state: Random number generation for centroid initialization
+
+    """
+    
+    def init(self, ):
+        self.clusters_centers = #init random centers
+        self.labels = #labels of each point
+        self.inertia = #Sum of squared distances of samples to their closest cluster center, weighted by sample weights if provided
+        self.n_iter = #Number of iterations that have been run
+
+    def fit(X[,y, sample_weight]):
+        #Compute K-Means clustering
+
+    def fit_predict(X[,y, sample_weight]):
+        #Compute cluster centers and predict cluster index for each sample
+
+    def fit_transform(X[,y, sample_weight]):
+        #Compute clustering and transform X to cluster-distance space
+
+    def get_feature_names_out([input_features]):
+        #Get output feature names for transformation
+
+    def get_params([deep]):
+        #Get parameters for this estimator
+
+    def predict(X[, sample_weight]):
+        #Predict the closest cluster each sample in X belongs to
+
+    def score(X[, sample_weight]):
+        #Oposite of the value of X on the K-means objective
+
+    def set_output(*[, transform]):
+        #Set output container
+
+    #def set_params(**params):
+        #Set the parameters of this estimator
+
+    #def transform(X):
+        #Transform X to a cluster-distance space
+    
