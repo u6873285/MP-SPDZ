@@ -3437,51 +3437,49 @@ def cholesky(A, reveal_diagonal=False):
                 L[i][j] = (1.0 / L[j][j] * (A[i][j] - sum))
     return L
 
+def linalg_norm(a, b):
+    return mpc_math.sqrt(sfix.dot_product(a, a) - 2 * sfix.dot_product(a, b) + sfix.dot_product(b, b))
 
-class Kmeans(n_clusters, n_init, max_iter, tol, random_state):
-    """ Kmeans using SGD.
+class KMeans():
+    """ Kmeans.
 
     :param n_clusters: Number of clusters
-    :param n_init: Number of K-Means trial runs
     :param max_iter: Maximum number of iterations (If no convergence)
-    :param tol: Minimum tolerance between two consecutive iterations for convergence
-    :param random_state: Random number generation for centroid initialization
 
     """
-    
-    def init(self, ):
-        self.clusters_centers = #init random centers
-        self.labels = #labels of each point
-        self.inertia = #Sum of squared distances of samples to their closest cluster center, weighted by sample weights if provided
-        self.n_iter = #Number of iterations that have been run
 
-    def fit(X[,y, sample_weight]):
-        #Compute K-Means clustering
+    def __init__(self, n_clusters, max_iter=300):
+        self.__n_clusters = n_clusters
+        self.__max_iter = max_iter
 
-    def fit_predict(X[,y, sample_weight]):
-        #Compute cluster centers and predict cluster index for each sample
+    def __initialize_centers(self, X:Matrix):
 
-    def fit_transform(X[,y, sample_weight]):
-        #Compute clustering and transform X to cluster-distance space
+        vector_size = X.sizes[1]
+        self.cluster_centers = Matrix(self.__n_clusters, vector_size, sfix)
 
-    def get_feature_names_out([input_features]):
-        #Get output feature names for transformation
+        @for_range(self.__n_clusters)
+        def _(i):
+            idx = (regint.get_random(32, size=vector_size)).__mod__(X.sizes[0])
+            self.cluster_centers[i] = X[idx]
 
-    def get_params([deep]):
-        #Get parameters for this estimator
+    @RuntimeWarning
+    def __closest_cluster(self, point):
+        best_idx = None
+        best_dist = None
+        @for_range(self.__n_clusters)
+        def _(i, best_dist=None):
+            dist = linalg_norm(self.cluster_centers[i], point)
+            if best_dist is None or dist < best_dist:
+                best_idx = i
+                best_dist = dist
 
-    def predict(X[, sample_weight]):
-        #Predict the closest cluster each sample in X belongs to
+        return best_idx
 
-    def score(X[, sample_weight]):
-        #Oposite of the value of X on the K-means objective
 
-    def set_output(*[, transform]):
-        #Set output container
+    def fit(self, X):
+        self.__initialize_centers(X)
+        # @for_range(X.shape[0])
+        # def _(i):
+        #     print(self.__closest_cluster(X[i]))
 
-    #def set_params(**params):
-        #Set the parameters of this estimator
 
-    #def transform(X):
-        #Transform X to a cluster-distance space
-    
