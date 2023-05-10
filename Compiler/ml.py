@@ -3448,7 +3448,8 @@ class KMeans():
 
     """
 
-    def __init__(self, n_clusters, max_iter=300):
+    def __init__(self, n_clusters, max_iter=300, program=None):
+        self.program = program
         self.__n_clusters = n_clusters
         self.__max_iter = max_iter
 
@@ -3462,24 +3463,22 @@ class KMeans():
             idx = (regint.get_random(32, size=vector_size)).__mod__(X.sizes[0])
             self.cluster_centers[i] = X[idx]
 
-    @RuntimeWarning
     def __closest_cluster(self, point):
         best_idx = None
         best_dist = None
         @for_range(self.__n_clusters)
-        def _(i, best_dist=None):
+        def _(i):
+            nonlocal best_idx
+            nonlocal best_dist
             dist = linalg_norm(self.cluster_centers[i], point)
             if best_dist is None or dist < best_dist:
                 best_idx = i
                 best_dist = dist
-
         return best_idx
 
 
     def fit(self, X):
         self.__initialize_centers(X)
-        # @for_range(X.shape[0])
-        # def _(i):
-        #     print(self.__closest_cluster(X[i]))
-
-
+        @for_range(0, X.shape[0])
+        def _(i):
+            print(self.__closest_cluster(X[i]))
